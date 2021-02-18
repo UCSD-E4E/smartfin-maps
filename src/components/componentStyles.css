@@ -1,0 +1,10 @@
+#date-filter {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100px;
+  width: 300px;
+  background-color: #000000DD;
+  color: #FFF;
+  z-index: 99999;
+}

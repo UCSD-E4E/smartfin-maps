@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { MapContainer, Circle, TileLayer, Marker, useMapEvent, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import SessionList from './SessionList';
+import DateFilter from './components/DateFilter';
+import InfoPanel from './components/InfoPanel';
+import SessionList from './components/SessionList';
 import "./styles.css";
 
 
@@ -42,38 +44,29 @@ const API = {
 export default function Map() {
 
   const [smartfinData, setSmartfinData] = useState([]);
+  const [startDate, setStartDate] = useState(0);
+  const [endDate, setEndDate] = useState(0);
   
   useEffect(() => {
-    API.fetchSessions()
-    .then(sessions=> setSmartfinData(sessions));
-    // ))
-    //   .then(sessions => {
-    //     console.log(sessions)
-    //     setSmartfinData(sessions)
-    //   });
-  }, [])
 
-  const data = [
-    {
-      position: [49.8397, 24.0297],
-      popup: <div>position</div>
-    },
-    {
-      position: [48.8397, 25.0297],
-      popup: <div>position</div>
-    },
-    {
-      position: [47.8397, 23.0297],
-      popup: <div>suck dik</div>
-    },
-    {
-      position: [7.8397, 123.0297],
-      popup: <div>suck dik</div>
-    },
-  ]
+    if (startDate !== 0 && endDate !== 0) {
+      API.fetchSessions()
+      .then(sessions=> setSmartfinData(sessions));
+    } else {
+      // query using start and end date filters
+    }
+  }, [startDate, endDate])
+
+  function filterSessions(startDate, endDate) {
+    setStartDate(startDate);
+    setEndDate(endDate);
+  } 
+
+  // TODO: ADD IN HOVER FUNCTIONALITY TO PULL UP SESSION INFO PANELS
+
 
   return (
-    <div>
+    <div id="map-container">
       <MapContainer
         className="markercluster-map"
         center={[0,0]}
@@ -88,12 +81,13 @@ export default function Map() {
           {smartfinData && smartfinData.map(session => (
             <Circle key={session.id} center={session.position} radius={50} color="green">
               <Popup key={session.id}>
-                <div>{session.popup}</div>
+                <InfoPanel session={session.id}></InfoPanel>
               </Popup>
             </Circle>
           ))}
         </MarkerClusterGroup>
       </MapContainer>
+      <DateFilter onClick={filterSessions}/>
     </div>
     
   )
