@@ -1,6 +1,7 @@
-/* // NOTE: styles are included via {<link />} tag at {index.html}
-// @import "~leaflet/dist/leaflet.css";
-// @import "~react-leaflet-markercluster/dist/styles.min.css"; */
+
+:root {
+  --smartfin-blue: #182B49;
+}
 
 * {
   font-family: 'Montserrat', sans-serif;;
@@ -8,11 +9,28 @@
 
 .leaflet-fade-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-zoom-animated { will-change:auto !important; }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 
 #map-container {
   position: relative;
 }
 
 .markercluster-map {
-  height: 90vh;
+  height: 100vh;
+}
+
+#sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
 }

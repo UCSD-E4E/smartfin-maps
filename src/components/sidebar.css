@@ -1,0 +1,146 @@
+button:active {
+  filter: brightness(50%);
+}
+
+button:focus {
+  outline: none;
+}
+
+#search-wrapper {
+  background-color: #008a7d;
+  padding: 30px;
+  padding-left: 40px;
+  margin-left: -20px;
+  width: 90%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  color: #FFF;
+  z-index: 9999;
+  box-shadow: 0px 5px 10px -5px #000;
+}
+
+#search-wrapper form label {
+  display: block;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+#search-wrapper form input {
+  padding: 10px 5px;
+  color: #003934;
+  outline: none;
+  border: none;
+  border-radius: 5px; 
+}
+
+#search-wrapper form button {
+  background-color: #003934;
+  color: white;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin: 1px;
+  border-radius: 5px;
+  transition-duration: .1s;
+}
+
+#search-wrapper form button:hover {
+  background-color: #00b6a7;
+}
+
+
+
+
+#session-list {
+  direction: rtl;
+  overflow-y: scroll;
+  background-color: #000A;
+  scrollbar-color:  #000D, #0008;
+  color: #FFF;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  z-index: 999;
+}
+
+#session-list li {
+  direction: ltr;
+  list-style: none;
+  margin: 10px;
+  padding: 10px;
+  background-color: #FFF;
+  border-radius: 5px;
+  transition-duration: .3s;
+  box-shadow: 0px 4px 8px -2px #000;
+  display: flex;
+  z-index: -1;
+  justify-content: space-between;
+}
+
+#session-list li:hover {
+  transform: translateY(4px);
+  box-shadow: 0px 4px 4px -4px #000;
+}
+
+
+
+#session-list li.active:hover {
+  transform: unset;
+  box-shadow: 0px 4px 8px -2px #000;
+}
+
+#session-list li div {
+  display: flex;
+  flex-direction: column;
+}
+
+#session-list li p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  font-size: 14px;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+#session-list li p:nth-child(1) {
+  font-weight: 700;
+  font-size: 20px;
+  text-align: left;
+  color: #008a7d;
+}
+
+#session-list li p:nth-child(2) {
+  font-weight: 100;
+  font-size: 12px;
+  text-align: left;
+}
+#session-list li p:nth-child(3) {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+
+#session-list li.active {
+  background-color: #303030;
+  position: relative;
+  height: auto;
+}
+
+#session-list li.active p {
+  color: #7fffd4;
+}
+
+#session-list li.active button {
+  background-color: #202020;
+  padding: 5px;
+  border-radius: 5px;
+  color: #FFF;
+  transition-duration: .1s;
+  border: none;
+}
+
+#session-list li.active button:hover {
+  background-color: #080808;
+}
