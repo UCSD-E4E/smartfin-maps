@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ChartPanel from "./components/ChartPanel";
 import Map from "./Map";
 
+import InfoPanel from './components/InfoPanel';
+
 
 
 // Top Level window 
@@ -14,6 +16,7 @@ export default function App() {
 
   return (
     <div>
+      <InfoPanel sessionId="1"/>
       { chartPanel }
       <Map/>
     </div>

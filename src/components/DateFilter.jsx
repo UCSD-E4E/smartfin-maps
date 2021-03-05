@@ -15,7 +15,15 @@ export default function DateFilter({ onSubmit }) {
   return (
     // keep this id its for styling, but u should edit the styles in componentStyles.css
     <div id="date-filter">
-      date filter
+      <p>Filter by Date</p>
+
+      <form id="dateform" action="">
+        <label htmlFor="startDate">Start Date:</label>
+        <input type="date" name="startDate" id="startDate"/>
+        <label htmlFor="startDate">End Date:</label>
+        <input type="date" name="endDate" id="endDate"/>
+
+      </form>
     </div>
   )
 }

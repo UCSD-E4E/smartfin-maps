@@ -5,13 +5,16 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "leaflet": "1.7.1",
     "leaflet.markercluster": "1.4.1",
     "react": "17.0.1",
+    "react-date-picker": "^8.0.7",
     "react-dom": "17.0.1",
     "react-leaflet": "3.0.2",
     "react-leaflet-markercluster": "3.0.0-rc1",
-    "react-scripts": "4.0.1"
+    "react-scripts": "4.0.1",
+    "requests": "^0.3.0"
   },
   "devDependencies": {
     "typescript": "3.3.3"
