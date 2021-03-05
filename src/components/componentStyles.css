@@ -1,14 +1,75 @@
 #date-filter {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 100px;
-  width: 300px;
-  background-color: #000000DD;
-  color: #FFF;
-  z-index: 99999;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 125px;
+    width: 300px;
+    background-color: #312626a5;
+    color: #FFF;
+    z-index: 99999;
+    text-align: center;
+    border-radius: 10px;
 }
 
+#dateform>* {
+    margin: 1%;
+}
+
+#dateform label {
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: right;
+}
+
+#dateform input {
+    display: inline-block;
+    float: left;
+}
+
+#panel {
+    background-color: #141111da;
+    color: white;
+    width: 250px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 8% 8% 11% 11% 11% 11% 11% 11% 11%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#banner {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    background-color: #141111da;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-radius: 10px;
+    padding: 2%;
+}
+
+#panel p {
+    margin: 3% 5%;
+    padding: 2%;
+    /* text-align: right; */
+}
+
+#panel>p:nth-child(odd) {
+    text-align: right;
+}
+
+#panel>p:nth-child(even) {
+    text-align: left;
+}
+
+#banner p:first-child {
+    text-align: left;
+}
+
+#banner p:last-child {
+    text-align: right;
 
 .popuptest {
   background-color: black;
