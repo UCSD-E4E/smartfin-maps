@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { parseIsolatedEntityName } from 'typescript';
+import React, { useEffect, useState } from 'react';
 import './sidebar.css';
 
-export default function SessionList({ sessions, onItemClick, onViewSession }) {
+export default function SessionList({ 
+  sessions, 
+  onItemClick, 
+  selectedSession, 
+  setSelectedSession,
+  setChartDisplay,
+}) {
 
-  const [activeItem, setActiveItem] = useState(0);
   let liClass = "";
-  console.log(activeItem)
 
   function parseDate(unixTime) {
-    console.log(unixTime)
     return new Date(unixTime).toString().substr(0, 16);
   }
 
   function handleItemClick(id, lng, lat) {
-    setActiveItem(id);
+    setSelectedSession(id);
     onItemClick({ center: [lat, lng], zoom: 15 });
   }
 
   function parseSessionData(sessions) {
     return sessions.map(session => {
-      if (activeItem === session.id) {
+      // determine if this list item is currently selected
+      if (selectedSession === session.id) {
         liClass = "active";
       } else {
         liClass = "";
@@ -31,7 +34,7 @@ export default function SessionList({ sessions, onItemClick, onViewSession }) {
         <div>
           <p>{ session.city }</p>
           <p>#{ session.id }</p>
-        { activeItem === session.id && <button onClick={() => onViewSession(session.id)}>check it out</button> }
+        { selectedSession === session.id && <button onClick={() => setChartDisplay(true)}>check it out</button> }
 
         </div>
         <p>{ date }</p>

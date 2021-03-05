@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles.css';
 import { MapContainer, Circle, TileLayer, Marker, useMapEvent, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -9,11 +9,20 @@ export default function SmartfinMap({ mapData, onMove, mapView }) {
 
   const { center, zoom } = mapView;
   const map = useMapEvent('mouseup', () => {
+    console.log('mouseup')
     const { _northEast, _southWest } = map.getBounds();
     onMove(_northEast, _southWest);
-  })
+  });
+  useMapEvent('zoom', () => {
+    console.log('mouseup')
+    const { _northEast, _southWest } = map.getBounds();
+    onMove(_northEast, _southWest);
+  });
 
-  map.setView(center, zoom);
+  useEffect(() => {
+    console.log("setting cevnter and zoom");
+    map.setView(center, zoom);
+  }, [center, zoom])
 
   return (
     <div>

@@ -6,6 +6,7 @@ import SearchInput from './components/SearchInput';
 import "./styles.css";
 import SmartfinMap from './components/SmartfinMap';
 import { map } from 'leaflet';
+import ChartPanel from './components/ChartPanel';
 
 
 
@@ -43,6 +44,9 @@ const API = {
     .catch(error => console.log(error));
     return response;
   },
+  fetchSession: async function() {
+
+  }
 }
 
 const testData = [
@@ -127,9 +131,12 @@ export default function Map() {
   const [listData, setListData] = useState([]);
   const [mapData, setMapData] = useState([]);
 
+  // display chart panel
+  const [chartPanelDisplayed, setChartPanelDisplayed] = useState(false);
+
   // current chart session we are viewing
-  const [chartSessionId, setChartSessionId] = useState(0);
-  console.log('current chart session', chartSessionId);
+  const [selectedSession, setSelectedSession] = useState(0);
+  console.log('current chart session', selectedSession);
 
 
   useEffect(() => {
@@ -185,9 +192,11 @@ export default function Map() {
           lng: session.position[1],
         })
       ));
+      setSelectedSession(0);
+      setChartPanelDisplayed(false);
     } 
     else if (searchRes.length === 0) {
-       alert("no session matches that id");
+      alert("no session matches that id");
     }
     else {
       setListData(searchRes);
@@ -233,10 +242,22 @@ export default function Map() {
        <SmartfinMap mapData={mapData} onMove={onMapMove} mapView={mapView}/>
       </MapContainer>
       <div id="sidebar">
-        <SearchInput sessionIds={smartfinData} filterList={filterList}/>
-        <SessionList sessions={listData} onItemClick={setMapView} onViewSession={setChartSessionId}/>
+        <SearchInput sessions={smartfinData} filterList={filterList}/>
+        <SessionList 
+          sessions={listData} 
+          onItemClick={setMapView} 
+          selectedSession={selectedSession}
+          setSelectedSession={setSelectedSession}
+          setChartDisplay={setChartPanelDisplayed}
+        />
       </div>
       <DateFilter onClick={filterSessions}/>
+      <ChartPanel 
+        displayed={chartPanelDisplayed} 
+        setChartPanelDisplayed={setChartPanelDisplayed}
+        session={selectedSession}
+      />
+      
     </div>
     
   )

@@ -17,11 +17,13 @@ body {
 
 #map-container {
   position: relative;
+  overflow: hidden;
 }
 
 .markercluster-map {
   height: 100vh;
 }
+
 
 #sidebar {
   position: absolute;

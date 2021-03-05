@@ -1,0 +1,25 @@
+
+
+#chart-panel {
+  position: absolute;
+  top: 5%;
+  width: 100%;
+  height: 85%;
+  background-color: antiquewhite;
+  z-index: 99999;
+  transition-duration: .6s;
+  transition-timing-function: ease;
+  box-shadow: -5px 10px 20px -10px #000;
+  margin: auto;
+  margin-left: 10%;
+}
+
+#chart-panel.hidden {
+  left: 200%;
+}
+
+
+#chart-panel.displayed {
+  left: 20%;
+}
+
