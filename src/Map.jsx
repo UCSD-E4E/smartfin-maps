@@ -52,8 +52,8 @@ const API = {
 const testData = [
   {
     position: [32, 119],
-    popup: 10000,
-    id: "10000",
+    popup: 15692,
+    id: "15692",
     city: 'la Jolla',
     date: 1614808649,
   },

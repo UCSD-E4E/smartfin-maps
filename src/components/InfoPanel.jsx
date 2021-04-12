@@ -4,10 +4,12 @@ import requests from 'requests';
 import './componentStyles.css';
 import '../styles.css';
 
+const dummy = {"rideId":"15693","loc1":"La Jolla","loc2":"San Diego","loc3":"San Diego County","startTime":1541791072,"endTime":1541794669,"heightSmartfin":0.45671978326367835,"tempSmartfin":20.044069023569023,"buoyCDIP":"201","heightCDIP":0.4414551854133606,"tempCDIP":19.860002517700195,"latitude":32.86058653508772,"longitude":-117.25365867324561}
+
 const getRide = async (rideId) => {
   return new Promise((resolve, reject) => {
     axios
-      .get('https://lit-sands-95859.herokuapp.com/ride/rides/rideId=15692?format=json')
+      .get(`https://lit-sands-95859.herokuapp.com/ride/rides/rideId=${rideId}?format=json`)
       .then((res) => {
         resolve(res);
       })
@@ -26,12 +28,13 @@ const getRide = async (rideId) => {
 export default function InfoPanel({ sessionId, onClick }) {
 
   // TODO: query the api using the sessionId to get the details and then display it
-  const [ride, setRide] = useState({});
+  const [ride, setRide] = useState(dummy);
 
   useEffect(() => {
-    getRide(1).then((res) => {
+    getRide(sessionId).then((res) => {
       setRide(res.data)
     });
+    // setRide(dummy);
   }, [])
 
   useEffect(() => {

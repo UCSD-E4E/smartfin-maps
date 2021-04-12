@@ -70,7 +70,8 @@
 
 #banner p:last-child {
     text-align: right;
+}
 
 .popuptest {
-  background-color: black;
+    background-color: black;
 }
