@@ -52,7 +52,7 @@ const API = {
 const testData = [
   {
     position: [32, 119],
-    id: "16000",
+    id: "Sfin-1a0027001047373333353132-190329-194128",
     city: 'la Jolla',
     date: 1614808649,
   },
@@ -130,16 +130,16 @@ export default function Map() {
 
 
   useEffect(() => {
-    // if (startDate === 0 && endDate === 0) {
-    //   API.fetchSessions()
-    //   .then(sessions=> {
-    //     console.log(sessions)
-    //     setSmartfinData(sessions)
-    //   });
-    // } else {
-    //   // query using start and end date filters
-    // }
-    setSmartfinData(testData);
+    if (startDate === 0 && endDate === 0) {
+      API.fetchSessions()
+      .then(sessions=> {
+        console.log(sessions)
+        setSmartfinData(sessions)
+      });
+    } else {
+      // query using start and end date filters
+      
+    }
   }, []);
   
   useEffect(() => {
@@ -205,9 +205,19 @@ export default function Map() {
     }
   }
 
-  function setDates(startDate=0, endDate=0) {
+  function setDates(startDate, endDate) {
     setStartDate(startDate);
     setEndDate(endDate);
+    if (startDate === 0 && endDate === 0) {
+      API.fetchSessions()
+      .then(sessions=> {
+        console.log(sessions)
+        setSmartfinData(sessions)
+      });
+    } else {
+      // query using start and end date filters
+      
+    }
   }
 
   function onMapMove(topLeftCoordinates, bottomRightCoordinates) {
@@ -262,7 +272,7 @@ export default function Map() {
           setChartDisplay={setChartPanelDisplayed}
         />
       </div>
-      <DateFilter reset={setDates} onSubmit={setDates}/>
+      <DateFilter onSubmit={setDates}/>
       <ChartPanel 
         displayed={chartPanelDisplayed} 
         setChartPanelDisplayed={setChartPanelDisplayed}

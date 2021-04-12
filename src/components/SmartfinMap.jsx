@@ -20,7 +20,7 @@ export default function SmartfinMap({ mapData, onMove, mapView, viewChart }) {
   });
 
   useEffect(() => {
-    console.log("setting cevnter and zoom");
+    console.log("setting center and zoom");
     map.setView(center, zoom);
   }, [center, zoom])
 
@@ -32,7 +32,7 @@ export default function SmartfinMap({ mapData, onMove, mapView, viewChart }) {
       />
       <MarkerClusterGroup zoomToBoundsOnClick={true}>
         {mapData && mapData.map(session => (
-          <Circle key={session.id} center={session.position} radius={10} color="green">
+          <Circle key={session.id} center={session.position} radius={10} color="blue">
             <Popup key={session.id}>
               <InfoPanel 
                 viewChart={viewChart}

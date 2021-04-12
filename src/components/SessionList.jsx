@@ -17,7 +17,7 @@ export default function SessionList({
 
   function handleItemClick(id, lng, lat) {
     setSelectedSession(id);
-    onItemClick({ center: [lat, lng], zoom: 15 });
+    onItemClick({ center: [lat, lng], zoom: 25 });
   }
 
   function parseSessionData(sessions) {

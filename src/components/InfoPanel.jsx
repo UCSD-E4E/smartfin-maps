@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import './componentStyles.css';
 import '../styles.css';
 
+const dummy = {"rideId":"15693","loc1":"La Jolla","loc2":"San Diego","loc3":"San Diego County","startTime":1541791072,"endTime":1541794669,"heightSmartfin":0.45671978326367835,"tempSmartfin":20.044069023569023,"buoyCDIP":"201","heightCDIP":0.4414551854133606,"tempCDIP":19.860002517700195,"latitude":32.86058653508772,"longitude":-117.25365867324561}
+
 const getRide = async (rideId) => {
   return new Promise((resolve, reject) => {
     fetch(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}`)
@@ -28,12 +30,13 @@ const getRide = async (rideId) => {
 export default function InfoPanel({ sessionId, viewChart }) {
 
   // TODO: query the api using the sessionId to get the details and then display it
-  const [ride, setRide] = useState({});
+  const [ride, setRide] = useState(dummy);
 
   useEffect(() => {
     getRide(sessionId).then((res) => {
       setRide(res)
     });
+    // setRide(dummy);
   }, [])
 
   // useEffect(() => {
@@ -45,7 +48,7 @@ export default function InfoPanel({ sessionId, viewChart }) {
     return (
       <div id="panel">
         <div id="banner">
-          <p>{ sessionId }</p>
+          <p>{ sessionId } <br/></p>
         
         </div>
 
