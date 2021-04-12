@@ -44,3 +44,51 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
     </div>
   )
 }
+/*
+  function buildChartData(plotpoints) {
+    let options = {
+      axisX: {
+        lineColor: '#CCCCCC',
+        valueFormatString: "MMM DD"
+      },
+      axisY: {
+        minimum: 0,
+        lineColor: '#CCCCCC',
+        gridColor: '#CCCCCC',
+        tickColor: '#CCCCCC',
+        labelFormatter: function ( e ) {
+          return e.value + "m";  
+        },
+        interval: .1,
+      },
+      backgroundColor: '#f0f8ff',
+      data: [{
+        // Change type to "doughnut", "line", "splineArea", etc.
+        type: 'line',
+        dataPoints: plotpoints.map(data => (
+          { 
+            x: data.time, 
+            y: data.height, 
+            rideId: data.rideId, 
+            location: data.location 
+          }
+        )),
+        lineColor: '#CCCCCC',
+      }],
+      dataPointMinWidth: 70,     
+      toolTip: {
+        content: metric ? "Session #{rideId}, {location} {y}m" : "{y}ft"
+      },
+      zoomEnabled: true,
+
+    }
+    setChartData(options);
+  }
+
+  
+  return (
+    <div>
+      <CanvasJSChart options={chartData}/>		
+    </div>
+  )
+  */

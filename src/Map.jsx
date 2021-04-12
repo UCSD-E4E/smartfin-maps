@@ -52,64 +52,55 @@ const API = {
 const testData = [
   {
     position: [32, 119],
-    popup: 10000,
-    id: "10000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-  {
-    position: [31, 117],
-    popup: 11000,
-    id: "11000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-  {
-    position: [33, 116],
-    popup: 12000,
-    id: "12000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-    {
-    position: [34, 115],
-    popup: 13000,
-    id: "13000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-  {
-    position: [35, 114],
-    popup: 14000,
-    id: "14000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-  {
-    position: [36, 113],
-    popup: 15000,
-    id: "15000",
-    city: 'la Jolla',
-    date: 1614808649,
-  },
-  {
-    position: [37, 110],
-    popup: 16000,
     id: "16000",
     city: 'la Jolla',
     date: 1614808649,
   },
   {
-    position: [38, 121],
-    popup: 17000,
-    id: "17000",
+    position: [31, 117],
+    id: "16072",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+  {
+    position: [33, 116],
+    id: "16073",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+    {
+    position: [34, 115],
+    id: "16075",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+  {
+    position: [35, 114],
+    id: "16076",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+  {
+    position: [36, 113],
+    id: "16079",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+  {
+    position: [37, 110],
+    id: "16081",
     city: 'la Jolla',
     date: 1614808649,
   },
   {
     position: [38, 121],
-    popup: 18000,
-    id: "18000",
+    id: "16088",
+    city: 'la Jolla',
+    date: 1614808649,
+  },
+  {
+    position: [38, 121],
+    id: "16098",
     city: 'la Jolla',
     date: 1614808649,
   },
@@ -136,7 +127,6 @@ export default function Map() {
 
   // current chart session we are viewing
   const [selectedSession, setSelectedSession] = useState(0);
-  console.log('current chart session', selectedSession);
 
 
   useEffect(() => {
@@ -166,17 +156,29 @@ export default function Map() {
       ({
         id: session.id,
         position: session.position,
-        popup: session.popup,
       })
     ));
   }, [smartfinData]);
 
-  function filterSessions(startDate, endDate) {
-    setStartDate(startDate);
-    setEndDate(endDate);
-    // filter list data based on start and end date
-    // this should actually change map data
-  } 
+  useEffect(() => {
+    function filterSessions() {
+      // filter list data based on start and end date
+      // this should actually change map data
+      console.log(startDate, endDate)
+      if(startDate === 0 && endDate === 0) {
+        filterList(0);
+        return;
+      }
+
+      let updatedData = smartfinData.filter(
+        session => (session.date >= startDate && session.date <= endDate)
+      );
+  
+      setSmartfinData(updatedData);
+    } 
+    filterSessions();
+  }, [startDate, endDate]);
+  
 
   function filterList(id) {
     let searchRes = listData.filter(session => (session.id === id));
@@ -201,6 +203,11 @@ export default function Map() {
     else {
       setListData(searchRes);
     }
+  }
+
+  function setDates(startDate=0, endDate=0) {
+    setStartDate(startDate);
+    setEndDate(endDate);
   }
 
   function onMapMove(topLeftCoordinates, bottomRightCoordinates) {
@@ -239,7 +246,11 @@ export default function Map() {
         zoom={4}
         worldCopyJump={true}
       >
-       <SmartfinMap mapData={mapData} onMove={onMapMove} mapView={mapView}/>
+        <SmartfinMap 
+          mapData={mapData} 
+          onMove={onMapMove}
+          mapView={mapView}
+          viewChart={setChartPanelDisplayed}/>
       </MapContainer>
       <div id="sidebar">
         <SearchInput sessions={smartfinData} filterList={filterList}/>
@@ -251,7 +262,7 @@ export default function Map() {
           setChartDisplay={setChartPanelDisplayed}
         />
       </div>
-      <DateFilter onClick={filterSessions}/>
+      <DateFilter reset={setDates} onSubmit={setDates}/>
       <ChartPanel 
         displayed={chartPanelDisplayed} 
         setChartPanelDisplayed={setChartPanelDisplayed}

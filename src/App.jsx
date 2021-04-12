@@ -16,7 +16,6 @@ export default function App() {
 
   return (
     <div>
-      <InfoPanel sessionId="1"/>
       { chartPanel }
       <Map/>
     </div>

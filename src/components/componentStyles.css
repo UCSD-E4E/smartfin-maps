@@ -24,13 +24,31 @@
 
 #dateform input {
     display: inline-block;
-    float: left;
+}
+
+.leaflet-popup-content-wrapper {
+    background-color: #141111da;
+    width: 200px;
+}
+
+.leaflet-popup-content {
+    padding: 0;
+    margin: 0;
+}
+
+.leaflet-popup-tip {  
+    background-color: #141111da;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    top: 5px;
+    right: 5px;
 }
 
 #panel {
-    background-color: #141111da;
+    min-width: 100%;
+    margin: 0;
     color: white;
-    width: 250px;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 8% 8% 11% 11% 11% 11% 11% 11% 11%;
@@ -47,12 +65,19 @@
     display: grid;
     grid-template-columns: 50% 50%;
     border-radius: 10px;
-    padding: 2%;
+    margin: 0;
+    width: 100%;
+    padding: 5px 0;
+}
+
+#banner p {
+    text-align: left;
 }
 
 #panel p {
-    margin: 3% 5%;
+    margin: 2% 5%;
     padding: 2%;
+    font-size: 12px;
     /* text-align: right; */
 }
 
@@ -68,9 +93,18 @@
     text-align: left;
 }
 
-#banner p:last-child {
-    text-align: right;
-
 .popuptest {
   background-color: black;
 }
+
+#see-details {
+    color: #008a7d;
+    text-align: right;
+    font-weight: 500;
+}
+
+
+#see-details:hover {
+    cursor: pointer;
+}
+

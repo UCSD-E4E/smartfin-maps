@@ -5,7 +5,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import InfoPanel from './InfoPanel';
 
 
-export default function SmartfinMap({ mapData, onMove, mapView }) {
+export default function SmartfinMap({ mapData, onMove, mapView, viewChart }) {
 
   const { center, zoom } = mapView;
   const map = useMapEvent('mouseup', () => {
@@ -34,7 +34,9 @@ export default function SmartfinMap({ mapData, onMove, mapView }) {
         {mapData && mapData.map(session => (
           <Circle key={session.id} center={session.position} radius={10} color="green">
             <Popup key={session.id}>
-              <InfoPanel sessionId={session.id}></InfoPanel>
+              <InfoPanel 
+                viewChart={viewChart}
+                sessionId={session.id}></InfoPanel>
             </Popup>
           </Circle>
         ))}
