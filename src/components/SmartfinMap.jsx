@@ -5,7 +5,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import InfoPanel from './InfoPanel';
 
 
-export default function SmartfinMap({ mapData, onMove, mapView, viewChart }) {
+export default function SmartfinMap({ sessions, buoys, onMove, mapView, viewChart }) {
 
   const { center, zoom } = mapView;
   const map = useMapEvent('mouseup', () => {
@@ -31,16 +31,44 @@ export default function SmartfinMap({ mapData, onMove, mapView, viewChart }) {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
       <MarkerClusterGroup zoomToBoundsOnClick={true}>
-        {mapData && mapData.map(session => (
-          <Circle key={session.id} center={session.position} radius={10} color="blue">
-            <Popup key={session.id}>
-              <InfoPanel 
-                viewChart={viewChart}
-                sessionId={session.id}></InfoPanel>
-            </Popup>
-          </Circle>
-        ))}
+      {
+            sessions && sessions.map(session => (
+            <Circle 
+              key={session.id} 
+              center={session.position} 
+              radius={15} 
+              color="green"
+            >
+              <Popup key={session.id}>
+                <InfoPanel 
+                  type={session.type}
+                  viewChart={viewChart}
+                  sessionId={session.id}></InfoPanel>
+              </Popup>
+            </Circle>
+            ))
+          }
+          </MarkerClusterGroup>
+      <MarkerClusterGroup zoomToBoundsOnClick={true}>
+       {
+            buoys && buoys.map(buoy => (
+            <Circle 
+              key={buoy.id} 
+              center={buoy.position} 
+              radius={15} 
+              color="purple"
+            >
+              <Popup key={buoy.id}>
+                <InfoPanel 
+                  type={buoy.type}
+                  viewChart={viewChart}
+                  sessionId={buoy.id}></InfoPanel>
+              </Popup>
+            </Circle>
+            ))
+          }
       </MarkerClusterGroup>
+      
     </div>
   )
 }

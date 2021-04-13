@@ -99,13 +99,9 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
   const [accheight, setah] = useState(200);
   const tempref = useRef(null);
   const [tempheight, setth] = useState(200);
-  console.log('DISPLAY', displayed)
 
 
   useEffect(() => {
-    // API.fetchSessionDetails('Sfin-1a0027001047373333353132-190329-194128')
-    // .then(response => console.log(response));
-    // setSessionData(testData);
     if (session) {
       getRide(session).then((res) => {
         setRide(res.data);
@@ -134,7 +130,8 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
   }, [session]);
 
   useEffect(()=>{
-    console.log("Ride: ", ride);
+    let heightSmartfin = ride.heightSmartfin ? ride.heightSmartfin : 0;
+    let heightCDIP = ride.heightCDIP ? ride.heightCDIP : 0;
 
     let color = 0;
     color = 255 * ((ride.tempSmartfin  - 32)/62)
@@ -164,8 +161,8 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 				indexLabelFontColor: "#5A5757",
 				indexLabelPlacement: "outside",
 				dataPoints: [
-					{ y: ride.heightSmartfin, label: "Smartfin Height (m)" },
-					{ y: ride.heightCDIP, label: "Buoy Height (m)" }
+					{ y: heightSmartfin, label: "Smartfin Height (m)" },
+					{ y: heightCDIP, label: "Buoy Height (m)" }
 				]
 			}]
 		}
@@ -191,15 +188,14 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 			},
 			data: [{
 				type: "line",
-				toolTipContent: "{x}s into session \n {y}m/s^2",
+				toolTipContent: "{x}s into session {y}m/s^2",
 				dataPoints: 
-          acc.acc && acc.acc.map( (num) => {
+          acc.acc.map( (num) => {
             ++counter;
             return { x:counter, y:num}
           }) 
 			}]
 		}
-
     setAccOptions(options);
   }, [acc]);
 
@@ -223,9 +219,9 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 			},
 			data: [{
 				type: "spline",
-        toolTipContent: "{x}s into session \n {y} C",
+        toolTipContent: "{x}s into session {y} C",
 				dataPoints: 
-          temp.temp && temp.temp.map( (num) => {
+          temp.temp.map( (num) => {
             ++counter;
             return { x:counter, y:num}
           }) 
@@ -252,7 +248,6 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
     }
   }
 
-
   let displayClass = displayed ? "displayed" : "hidden";
 
   return (
@@ -268,23 +263,24 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
             @ {ride.loc1}
           </h3>
         </div>
-      </div>
-
-      <div id="download-area">
+        <div id="download-area">
         {
           acc.acc ? 
           <button id="download" onClick={handleDownload}>download .csv</button>
           :
           null
         }
-      </div> 
+        </div> 
+      </div>
+
+     
       
       <div id="stats">
         <div>
           <FontAwesomeIcon icon={faWater} />
           <p>Avg Session Height</p>
           <h2>
-            {ride.heightSmartfin.toLocaleString(
+            {ride.heightSmartfin && ride.heightSmartfin.toLocaleString(
                 undefined,
                 {maximumFractionDigits: 3}
               )
@@ -304,7 +300,7 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
           <FontAwesomeIcon icon={faThermometer} />
           <p>Avg Session Temperature</p>
           <h2 style={{color:`rgb(${tempColor},0,0)`}}>
-            {ride.tempSmartfin.toLocaleString(
+            {ride.tempSmartfin && ride.tempSmartfin.toLocaleString(
                 undefined,
                 {maximumFractionDigits: 3}
               )
@@ -328,24 +324,15 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
         </div>
       </div>
       <div id="heightchart" ref={heightref} class="chart">
-        <CanvasJSChart options = {heightOptions} 
-        /* onRef={ref => this.chart = ref} */
-        /> 
+        <CanvasJSChart options = {heightOptions} />
       </div>
       <div id="acctime" ref={accref} class="chart">
-        { acc.acc || <p>no acceleration data availiable for this session</p> }
-        
-        <CanvasJSChart options = {accOptions}
-          /* onRef={ref => this.chart = ref} */
-        />
-        
+        { accOptions ?  <CanvasJSChart options={accOptions}/> : <p>no acceleration data availiable for this session</p> }
+      
       </div>
       <div id="temptime" ref={tempref} class="chart">
-        { temp.temp || <p>no temperature data availiable for this session</p> }
+        { temp.temp ? <CanvasJSChart options = {tempOptions}/> : <p>no temperature data availiable for this session</p> }
         
-        <CanvasJSChart options = {tempOptions}
-        /* onRef={ref => this.chart = ref} */
-        />
         
       </div>
     </div>

@@ -30,7 +30,7 @@ export default function SessionList({
       }
       let date = parseDate(session.date);
       return (
-      <li className={ liClass } key={session.id} onClick={() => handleItemClick(session.id, session.lng, session.lat)}>
+      <li className={ liClass } key={session.id} onClick={() => handleItemClick(session.id, session.position[1], session.position[0])}>
         <div>
           <p>{ session.city }</p>
           <p>#{ session.id }</p>
