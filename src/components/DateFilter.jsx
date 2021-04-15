@@ -16,8 +16,8 @@ export default function DateFilter({ onSubmit }) {
     e.preventDefault();
     let startDate = document.querySelector("#startDate");
     let endDate = document.querySelector("#endDate");
-    startDate = new Date(startDate.value).getTime() / 1000;
-    endDate = new Date(endDate.value).getTime() / 1000;
+    startDate = new Date(startDate.value).getTime();
+    endDate = new Date(endDate.value).getTime();
 
     if (!startDate || ! endDate || endDate - startDate <= 0) {
       alert("start date must be > end date");
@@ -37,15 +37,17 @@ export default function DateFilter({ onSubmit }) {
   return (
     // keep this id its for styling, but u should edit the styles in componentStyles.css
     <div id="date-filter">
-      <p>Filter by Date</p>
-
       <form id="dateform" action="">
         <label htmlFor="startDate">Start Date:</label>
         <input type="date" name="startDate" id="startDate"/>
+    
         <label htmlFor="startDate">End Date:</label>
         <input type="date" name="endDate" id="endDate"/>
-        <button onClick={e => parseInputs(e)}>filter</button>
-        <button onClick={e => handleReset(e)}>reset dates</button>
+
+        <div>
+          <button onClick={e => parseInputs(e)}>filter</button>
+          <button onClick={e => handleReset(e)}>reset</button>
+        </div>
       </form>
     </div>
   )

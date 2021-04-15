@@ -3,6 +3,7 @@ import './sidebar.css';
 
 export default function SessionList({ 
   sessions, 
+  buoys,
   onItemClick, 
   selectedSession, 
   setSelectedSession,
@@ -10,6 +11,7 @@ export default function SessionList({
 }) {
 
   let liClass = "";
+  const [listView, setListView] = useState('sessions');
 
   function parseDate(unixTime) {
     return new Date(unixTime).toString().substr(0, 16);
@@ -19,6 +21,7 @@ export default function SessionList({
     setSelectedSession(id);
     onItemClick({ center: [lat, lng], zoom: 25 });
   }
+
 
   function parseSessionData(sessions) {
     return sessions.map(session => {
@@ -43,10 +46,53 @@ export default function SessionList({
     })
   }
 
+  function parseBuoyData(buoys) {
+    return buoys.map(buoy => {
+      // determine if this list item is currently selected
+      if (selectedSession === buoy.id) {
+        liClass = "active";
+      } else {
+        liClass = "";
+      }
+      return (
+      <li className={ liClass } key={buoy.id} onClick={() => handleItemClick(buoy.id, buoy.position[1], buoy.position[0])}>
+        <div>
+          <p>Station { buoy.id }</p>
+          <p>{ buoy.position }</p>
+        </div>
+      </li>
+      ) 
+    })
+  }
+
+  function viewBuoys() { setListView('buoys'); }
+  function viewFins() { setListView('sessions'); }
+
+  let buoyClass = '';
+  let finClass = '';
+
+  if (listView === 'sessions') {
+    finClass = 'active';
+  } else {
+    buoyClass = 'active';
+  }
+
   return (
-    <ul id="session-list"> 
-      { sessions && parseSessionData(sessions) }
-    </ul>
+    <>
+      <div id="list-menu">
+        <button className={finClass} onClick={ viewFins }>sessions</button>
+        <button className={buoyClass} onClick={ viewBuoys }>buoys</button>
+      </div>
+      
+      <ul id="session-list">
+        { listView === 'sessions' ?
+          sessions && parseSessionData(sessions) 
+          :
+          buoys && parseBuoyData(buoys)
+        } 
+      </ul>
+    </>
+  
   )
 }
   

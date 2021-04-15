@@ -1,13 +1,28 @@
 import React from 'react';
 import './sidebar.css';
 
-export default function SearchInput({ sessions, filterList }) {
+export default function SearchInput({ sessions, filterList, setListView }) {
 
   function selectSession(e) {
     e.preventDefault();
     filterList(document.getElementById('id-input').value);
   }
 
+  function reset(e) {
+    e.preventDefault(); 
+    filterList(0);
+    document.getElementById('id-input').value = '';
+  }
+
+  function viewBuoys(e) {
+    e.preventDefault();
+    setListView('buoys');
+  }
+
+  function viewFins(e) {
+    e.preventDefault();
+    setListView('sessions');
+  } 
 
   return (
     <div id="search-wrapper">
@@ -22,7 +37,8 @@ export default function SearchInput({ sessions, filterList }) {
           )) }
         </datalist>
         <button onClick={ selectSession }>go!</button>
-        <button onClick={ (e)=> { e.preventDefault(); filterList(0) }}>reset</button>
+        <button onClick={ reset }>reset</button>
+        
       </form>
     </div>
   )

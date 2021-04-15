@@ -171,6 +171,13 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 
   useEffect(()=>{
     let counter = 0;
+    let dataPoints = acc.acc ? 
+    acc.acc.map( (num) => {
+      ++counter;
+      return { x:counter, y:num}
+    }) 
+    :
+    [];
     const options = {
       height: accheight,
 			animationEnabled: true,
@@ -189,11 +196,7 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 			data: [{
 				type: "line",
 				toolTipContent: "{x}s into session {y}m/s^2",
-				dataPoints: 
-          acc.acc.map( (num) => {
-            ++counter;
-            return { x:counter, y:num}
-          }) 
+				dataPoints: dataPoints 
 			}]
 		}
     setAccOptions(options);
@@ -202,6 +205,13 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
   //temp options
   useEffect(()=>{
     let counter = 0;
+    let dataPoints = temp.temp ?
+    temp.temp.map( (num) => {
+      ++counter;
+      return { x:counter, y:num}
+    }) 
+    :
+    [];
     const options = {
       height: tempheight,
 			animationEnabled: true,
@@ -220,11 +230,7 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
 			data: [{
 				type: "spline",
         toolTipContent: "{x}s into session {y} C",
-				dataPoints: 
-          temp.temp.map( (num) => {
-            ++counter;
-            return { x:counter, y:num}
-          }) 
+				dataPoints: dataPoints
       }]
 		}
     setTempOptions(options);
@@ -255,22 +261,20 @@ export default function ChartPanel({ displayed, session, setChartPanelDisplayed 
     <div id="chart-panel" className={displayClass}>
       <div id="header">
         <button id="exit" onClick={() => setChartPanelDisplayed(false)}>x</button>
-        <div>
+        <div id="title">
           <h3>
             {ride.rideId}
           </h3>
-          <h3>
+          <h4>
             @ {ride.loc1}
-          </h3>
+          </h4>
         </div>
-        <div id="download-area">
         {
           acc.acc ? 
           <button id="download" onClick={handleDownload}>download .csv</button>
           :
           null
         }
-        </div> 
       </div>
 
      

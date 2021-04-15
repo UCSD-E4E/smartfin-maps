@@ -12,20 +12,20 @@ import ChartPanel from './components/ChartPanel';
 
 const API = {
   fetchSessions: async function() {
-    console.log('sessions: ');
-
     let sessions = await fetch("http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/fields=longitude,latitude,loc1,startTime")
     .then(response => response.json())
-    .then(data => (data.data));
-    sessions = sessions.map(session => (
-      {
-        type: 'session',
-        id: session.rideId,
-        city: session.loc1,
-        date: session.startDate,
-        position: [session.latitude, session.longitude]
-      }
-    ));
+    .then(data => {
+      return data.data.map(session => {
+        return {
+          type: 'session',
+          position: [session.latitude, session.longitude],
+          id: session.rideId,
+          city: session.loc1,
+          date: session.startTime * 1000,
+        }
+      });
+    })
+    .catch(error => console.log(error));
     localStorage.setItem('sessions', JSON.stringify(sessions));
     return sessions;
   },
@@ -54,11 +54,7 @@ export default function Map() {
   // top level data, this should not change and only update when we get a new session from api
   const [sessions, setSessions] = useState([]);
   const [buoys, setBuoys] = useState([]);
-
   const [mapView, setMapView] = useState({ center: [32.8, -117.2], zoom: 10 });
-
-  const [startDate, setStartDate] = useState(0);
-  const [endDate, setEndDate] = useState(0);
 
   // display chart panel
   const [chartPanelDisplayed, setChartPanelDisplayed] = useState(false);
@@ -69,7 +65,7 @@ export default function Map() {
 
   useEffect(() => {
     async function fetchData() {
-      let sessions = localStorage.getItem('sessions');
+      let sessions = null//localStorage.getItem('sessions');
   
       if (sessions) {
         sessions = JSON.parse(sessions);
@@ -78,7 +74,7 @@ export default function Map() {
       }
       setSessions(sessions);
 
-      let buoys = localStorage.getItem('buoys');
+      let buoys = null//localStorage.getItem('buoys');
   
       if (buoys) {
         buoys = JSON.parse(buoys);
@@ -90,31 +86,10 @@ export default function Map() {
     fetchData()
   }, []);
 
-  useEffect(() => {
-    async function filterSessions() {
-      if (!sessions) return;
-      // filter list data based on start and end date
-      // this should actually change map data
-      if(startDate === 0 && endDate === 0) {
-        filterList(0);
-        return;
-      }
-
-      let newSessions = JSON.parse(localStorage.getItem('sessions'));
-      if (!newSessions) return;
-     
-      if (!startDate && !endDate) {
-        newSessions = newSessions.filter(
-          session => (session.date >= startDate && session.date <= endDate)
-        );
-      }
-      setSessions(newSessions);
-    } 
-    filterSessions();
-  }, [startDate, endDate]);
-  
+ 
 
   function filterList(id) {
+    console.log("SESSION clicked", id)
     if (!sessions) {
       return;
     }
@@ -137,13 +112,31 @@ export default function Map() {
   }
 
   function setDates(startDate, endDate) {
-    setStartDate(startDate);
-    setEndDate(endDate);
+    console.log(startDate, endDate, 'ZSDFKJ')
+
+    if (!sessions) return;
+    // filter list data based on start and end date
+    // this should actually change map data
+    if(startDate === 0 && endDate === 0) {
+      filterList(0);
+      return;
+    }
+
+    let newSessions = JSON.parse(localStorage.getItem('sessions'));
+    if (!newSessions) return;
+    
+    if (startDate && endDate) {
+      newSessions = newSessions.filter(
+        session => (session.date >= startDate && session.date <= endDate)
+      );
+    }
+    setSessions(newSessions);
   }
 
   function onMapMove(topLeftCoordinates, bottomRightCoordinates) {
     let updatedList = JSON.parse(localStorage.getItem('sessions'));
     if (!updatedList) return;
+    console.log(updatedList)
     // get all sessions between bottom and top latitude
     let topLat = topLeftCoordinates.lat;
     let bottomLat = bottomRightCoordinates.lat;
@@ -153,8 +146,9 @@ export default function Map() {
     let leftLng = topLeftCoordinates.lng;
     let rightLng = bottomRightCoordinates.lng;
     updatedList = updatedList.filter(session => ( session.position[1] < leftLng && session.position[1] > rightLng ));
+    console.log(updatedList)
 
-    setSessions(updatedList);
+    // setSessions(updatedList);
   }
 
   // TODO: ADD IN HOVER FUNCTIONALITY TO PULL UP SESSION INFO PANELS
@@ -178,7 +172,8 @@ export default function Map() {
       <div id="sidebar">
         <SearchInput 
           sessions={sessions} 
-          filterList={filterList}/>
+          filterList={filterList}
+        />
         <SessionList 
           sessions={sessions} 
           buoys={buoys}
