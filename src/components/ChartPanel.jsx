@@ -31,7 +31,7 @@ const getRide = async (rideId) => {
   return new Promise((resolve, reject) => {
     console.log('FETCHING', rideId)
     axios
-      .get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}?format=json`)
+      .get(`https://ride-api.online/ride/rides/rideId=${rideId}?format=json`)
       .then((res) => {
         resolve(res);
       })
@@ -44,7 +44,7 @@ const getRide = async (rideId) => {
 const getAcc = async (rideId) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}/datalist/type=acc`)
+      .get(`https://ride-api.online/ride/rides/rideId=${rideId}/datalist/type=acc`)
       .then((res) => {
         resolve(res);
       })
@@ -57,7 +57,7 @@ const getAcc = async (rideId) => {
 const getTemp = async (rideId) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}/datalist/type=temp`)
+      .get(`https://ride-api.online/ride/rides/rideId=${rideId}/datalist/type=temp`)
       .then((res) => {
         resolve(res);
       })
@@ -70,7 +70,7 @@ const getTemp = async (rideId) => {
 const downloadCSV = async (rideId) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}/dataframes/type=motion`)
+      .get(`https://ride-api.online/ride/rides/rideId=${rideId}/dataframes/type=motion`)
       .then((res) => {
         resolve(res);
       })
