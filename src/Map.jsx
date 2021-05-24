@@ -12,7 +12,7 @@ import ChartPanel from './components/ChartPanel';
 
 const API = {
   fetchSessions: async function() {
-    let sessions = await fetch("http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/fields=longitude,latitude,loc1,startTime")
+    let sessions = await fetch("https://ride-api.online/ride/rides/fields=longitude,latitude,loc1,startTime")
     .then(response => response.json())
     .then(data => {
       return data.data.map(session => {
@@ -30,7 +30,7 @@ const API = {
     return sessions;
   },
   fetchBuoys: async function() {
-    let buoys = await fetch("http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/buoys/fields")
+    let buoys = await fetch("https://ride-api.online/ride/buoys/fields")
     .then(response => response.json())
     .then(data => {
       console.log('BUOY DATA', data)

@@ -8,7 +8,7 @@ const dummy = {"rideId":"15693","loc1":"La Jolla","loc2":"San Diego","loc3":"San
 
 const getRide = async (rideId) => {
   return new Promise((resolve, reject) => {
-    fetch(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}`)
+    fetch(`https://ride-api.online/ride/rides/rideId=${rideId}`)
       .then((res) => {
         return res.json();
       })
